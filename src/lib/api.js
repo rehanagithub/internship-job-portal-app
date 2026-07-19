@@ -1,10 +1,12 @@
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') || '';
-// export const API_BASE = `http://localhost:5000/api`;
-export const API_BASE = `https://internship-job-portal-app-baackend-5.onrender.com/api`;
+export const API_BASE = `http://localhost:5000/api`;
+//export const API_BASE = `https://internship-job-portal-app-baackend.onrender.com`;
 
 
-
-
+async function getToken() {
+  const { data: { session } } = await supabase.auth.getSession();
+  return session?.access_token || null;
+}
 async function request(path, options = {}) {
   const token = localStorage.getItem('access_token');
   const headers = { 'Content-Type': 'application/json', ...options.headers };
@@ -23,8 +25,8 @@ export const api = {
   put: (path, body) => request(path, { method: 'PUT', body: JSON.stringify(body) }),
   delete: (path) => request(path, { method: 'DELETE' }),
 
-  upload: (path, formData) => {
-    const token = localStorage.getItem('access_token');
+   upload: async (path, formData) => {
+    const token = await getToken();
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
     return fetch(`${API_BASE}${path}`, { method: 'POST', body: formData, headers })
@@ -34,3 +36,5 @@ export const api = {
       });
   },
 };
+
+
