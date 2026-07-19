@@ -1,6 +1,8 @@
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') || '';
 //export const API_BASE = `http://localhost:5000/api`;
-export const API_BASE = `https://internship-job-portal-app-baackend-5.onrender.com/api`;
+//export const API_BASE = `https://internship-job-portal-app-baackend-5.onrender.com/api`;
+
+export const API_BASE = `https://internship-job-portal-app-baackend-6.onrender.com/api`;
 
 
 async function getToken() {
